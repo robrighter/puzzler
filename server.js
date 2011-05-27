@@ -1,5 +1,6 @@
 var express  = require('express'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    puzzles  = require('./puzzles');
     
     
 var app = express.createServer();

@@ -39,11 +39,11 @@ module.exports={
 }
 
 //test
-  var question = module.exports.createQuestion();
+/*  var question = module.exports.createQuestion();
   console.log('Question is: ');
   console.log(question);
   
   var answer = sortArray(question.array_to_sort);
   console.log(answer);
   console.log(module.exports.validateAnswer(question, answer));
-
+*/

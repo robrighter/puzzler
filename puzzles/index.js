@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var puzzles = fs.readdirSync('./').filter(function(i){ return i !== 'index.js' });
+var puzzles = fs.readdirSync(__dirname).filter(function(i){ return i !== 'index.js' });
 
 
 module.exports = puzzles.reduce(function(acc, i){
