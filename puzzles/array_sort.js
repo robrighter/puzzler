@@ -19,7 +19,8 @@ function sortArray(tosort){
 
 module.exports={
   name:'Array Sort',
-
+  description: 'Tell me about it.',
+  
   createQuestion:function(){
     return {
       array_to_sort: makeArray(),

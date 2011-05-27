@@ -2,7 +2,8 @@ var pi='3.1415926535897932384626433832795028841971693993751058209749445923078164
 
 module.exports={
   name:'Pi',
-
+  description: 'Tell me how awesome this is',
+  
   createQuestion:function(){
     return {
       digits_after_decimal: pi.length - Math.floor(Math.random()*1000),

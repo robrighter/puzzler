@@ -7,11 +7,12 @@
     We also reference the user, to prevent
     griefing.
 */
+var mongoose = require('mongoose');
 
+var Schema   = mongoose.Schema;
 var ObjectId = Schema.ObjectId;
 
-var Question = new Schema({
-  data:          Object,
+var QuestionSchema = new Schema({
   start_time:    Date,
   submit_time:   Date,
   user:          ObjectId
@@ -21,9 +22,17 @@ var Question = new Schema({
     their API key. You know, to prevent screwing
     around with other people.
 */
-var User = new Schema({
+var UserSchema = new Schema({
   twitter_name:  String,
   access_token:  String,
   access_key:    String,
   api_key:       String 
 });
+
+mongoose.model('Question', QuestionSchema);
+mongoose.model('User', UserSchema);
+
+module.exports = {
+  Question: mongoose.model('Question'),
+  User: mongoose.model('User')
+}
