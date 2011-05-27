@@ -1,0 +1,11 @@
+{
+  "name": "puzzler",
+  "version": "0.0.1",
+  "description": "A nifty, Node.js-powered puzzle competition engine.",
+  "url": "http://github.com/robrighter/puzzler",
+  "dependencies": {
+    "express": ">= 2.3.0",
+    "mongoose": ">= 1.0.0",
+    "jade": ">= 0.11.0"
+  }
+}
