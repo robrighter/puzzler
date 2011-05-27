@@ -4,8 +4,14 @@ var express  = require('express'),
     
 var app = express.createServer();
 
+app.configure(function(){
+  app.use(express.static(__dirname + '/public'));
+  app.set('views', __dirname + '/templates');
+  app.set('view engine', 'jade');
+});
+
 app.get('/', function(request, response){
-  response.send('Hello World');
+  response.render('index');
 });
 
 app.listen(3000);
