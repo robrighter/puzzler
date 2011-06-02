@@ -8,7 +8,7 @@ var PORT = 3000;
 
 var app = express.createServer();
 app.configure(function(){
-  app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/static'));
   app.set('views', __dirname + '/templates');
   app.set('view engine', 'jade');
 });
