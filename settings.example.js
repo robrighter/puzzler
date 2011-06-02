@@ -3,5 +3,5 @@
 // can specify your info
 
 module.exports = {
-  mongo_connection_string: "mongodb://localhost/my_database"
-};
+   MongoConnectUri: '<ADD CONNECTION STRING>' //'mongodb://localhost:27017/test'
+}

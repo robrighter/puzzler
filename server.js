@@ -1,6 +1,8 @@
 var express  = require('express'),
     models   = require('./models'),
-    puzzles  = require('./puzzles');
+    puzzles  = require('./puzzles'),
+    mongoose = require('mongoose'),
+    settings = require('./settings');
     
 var PORT = 3000;
 
@@ -10,6 +12,20 @@ app.configure(function(){
   app.set('views', __dirname + '/templates');
   app.set('view engine', 'jade');
 });
+
+// SETUP THE MODELS & DB
+mongoose.connect(settings.MongoConnectUri);
+var Schema = mongoose.Schema;
+var ObjectId = Schema.ObjectId;
+var Attempt = new Schema({
+  twitter_name: String,
+  puzzle_slug:  String,
+  question:  String, //JSON
+  start_time: Number,
+  end_time: Number,
+  solved: Boolean
+});
+
 
 // None of this stuff is very useful yet, 
 // but as the general idea gets fleshed out
@@ -26,18 +42,18 @@ app.configure(function(){
 //      an additional /puzzle/:id/play/:key/ that would
 //      specify a particular position in a given puzzle
 
-app.get('/play/puzzle/:id', function(req, res){
+app.get('/play/puzzle/:puzzleslug', function(req, res){
   res.send({status: 'ok', puzzle: req.params.id});
 });
 
-app.post('/play/puzzle/:id', function(req, res){
+app.post('/play/puzzle/:puzzleslug', function(req, res){
   //Send post to question.
   //Wait for validated response.
   //Rock the casbah
   res.send({status: 'ok'});
 });
 
-app.get('/puzzle/:id', function(req, res){
+app.get('/puzzle/:puzzleslug', function(req, res){
   res.send({status: 'ok'});
 });
 
@@ -49,7 +65,7 @@ app.get('/play', function(req, res){
   for(puzzle in puzzles){
     counter++;
     result["puzzle" + counter] = {
-      url: '/play/puzzle' + counter,
+      url: '/play/puzzle/' + slugify(puzzles[puzzle].name),
       name: puzzles[puzzle].name,
       description: puzzles[puzzle].description
     };
@@ -63,3 +79,12 @@ app.get('/', function(req, res){
 
 app.listen(PORT);
 console.log("Puzzler is ready for connections on port " + PORT);
+
+///////////////////////////////////////////////////////////////////
+// UTILS
+function slugify(text) {
+  text = text.replace(/[^-a-zA-Z0-9,&\s]+/ig, '');
+  text = text.replace(/-/gi, "_");
+  text = text.replace(/\s/gi, "-");
+  return text.toLowerCase();
+}
