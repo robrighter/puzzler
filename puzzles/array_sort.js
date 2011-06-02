@@ -1,7 +1,7 @@
 var assert = require('assert');
 
 function makeArray(){
-  var length = 100000;
+  var length = 1000;
   var toreturn = [];
   for(var i=0; i<length; i++){
     toreturn[i] = Math.floor(Math.random()*(length*2));
@@ -58,7 +58,7 @@ module.exports={
   createQuestion:function(){
     return {
       array_to_sort: makeArray(),
-      solution_template: [0,1,2,3,4,5,6,7,8,9,10]
+      solution_template: {id: '<id>', answer: [0,1,2,3,4,5,6,7,8,9,10]}
     }
   },
 

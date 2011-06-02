@@ -7,7 +7,7 @@ module.exports={
   createQuestion:function(){
     return {
       digits_after_decimal: pi.length - Math.floor(Math.random()*1000),
-      solution_template: '3.1415926535897932'
+      solution_template: {id: '<id>', answer: '3.1415926535897932'}
     }
   },
 

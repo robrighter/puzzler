@@ -69,7 +69,7 @@ module.exports={
   createQuestion:function(){
     return {
       set: makeArray(),
-      solution_template: [ [1,2,-3], [-4,-4,5,3], [-2,2] ]
+      solution_template: {id: '<id>', answer: [ [1,2,-3], [-4,-4,5,3], [-2,2] ]}
     }
   },
 
