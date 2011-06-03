@@ -6,6 +6,26 @@ var express  = require('express'),
     
 var PORT = 3000;
 
+
+/*
+Here's some docs in case I fall asleep before this is done.
+URLs:
+  / - Obvious.
+  /puzzle/<slug> - Individual page for aggregate info about a single puzzle.
+                  not done.
+  /puzzle/<slug>?format=json - Returns data from above in JSON format, useful
+                               for building/updating the root page too.
+  /play         -  Get the list of puzzles
+  /play/puzzle/<slug>/<twittername>  - Get a new puzzle
+  POST /play/puzzle/<slug>/<twittername> - Submit a puzzle
+  
+  
+It all needs testing, that's for sure.
+
+*/
+
+
+
 var app = express.createServer();
 app.configure(function(){
   app.use(express.static(__dirname + '/static'));
@@ -77,11 +97,6 @@ app.post('/play/puzzle/:puzzleslug/:twittername', function(req, res){
   //Send post to question.
   //Wait for validated response.
   //Rock the casbah
-
-	//Get the puzzle.
-	//find the attempt
-	//See if the twitter names match up.
-	//Do the thing.
 	var submit_time = Date.now();
 	var puzzle = puzzles[req.param('puzzleslug')];
 	if(typeof(puzzle) == 'undefined'){
@@ -135,14 +150,18 @@ app.get('/puzzle/:puzzleslug', function(req, res){
 	if(typeof(puzzle) == 'undefined'){
 		res.send('wat', 404);
 	} else {
-		Attempt.find({}, function(err, atts){
-			if(!err){
-				console.log(atts);
+		Attempt.find({$where : 'this.total_time != null'}, function(err, atts){
+			if(!err && (req.param('format') == 'json')){
+			  var results = atts.map(function(item){
+			    return { player: item.twitter_name, time: item.total_time}
+			  });
+        res.send(results);
+			} else if(!err){
 				res.render('puzzle', {
-					attempts: atts
-				});
+					locals: {attempts: atts}
+				});			  
 			} else {
-				res.render('wat', 500);
+				res.render('Not Found', 500);
 			}
 		});
 	}
