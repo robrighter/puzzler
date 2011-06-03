@@ -131,7 +131,21 @@ app.post('/play/puzzle/:puzzleslug/:twittername', function(req, res){
 
 // Get Puzzle template for aggregate data.
 app.get('/puzzle/:puzzleslug', function(req, res){
-  res.send({status: 'ok'});
+	var puzzle = puzzles[req.param('puzzleslug')];
+	if(typeof(puzzle) == 'undefined'){
+		res.send('wat', 404);
+	} else {
+		Attempt.find({}, function(err, atts){
+			if(!err){
+				console.log(atts);
+				res.render('puzzle', {
+					attempts: atts
+				});
+			} else {
+				res.render('wat', 500);
+			}
+		});
+	}
 });
 
 app.get('/play', function(req, res){
@@ -151,7 +165,9 @@ app.get('/play', function(req, res){
 });
 
 app.get('/', function(req, res){
-  res.render('index');
+  res.render('index', {
+		locals: { puzzles: puzzles }
+	});
 });
 
 app.listen(PORT);
